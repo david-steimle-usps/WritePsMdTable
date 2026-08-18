@@ -7,11 +7,24 @@ function Write-PsMdTable {
   .EXAMPLE
   Write-PsMdTable -InputObject $MyObject -Columns @('Name','Year') -Justification @('L','C')
 
+  .EXAMPLE
+  $Splat = @{
+    InputObject = (Get-Content .\data.json | ConvertFrom-Json) | Sort-Object -Property Year,Month,Day
+    Columns = @('Release','Type','Artist','Album')
+    Justification = @('C','C','R','L')
+  }
+  Write-PsMdTable @Splat
+
   .PARAMETER InputObject
+  The object for table creation.
 
   .PARAMETER Columns
+  The properties to use as column names in desired order.
 
   .PARAMETER Justification
+  Array of L/C/R entries for Left/Center/Right justification of columns.
+
+  .LINK
 
   #>
   [CmdletBinding()]
@@ -25,7 +38,7 @@ function Write-PsMdTable {
     [Parameter(
       Mandatory = $true,
       ValueFromPipeline = $true,
-      HelpMessage = "The properties to use as column names."
+      HelpMessage = "The properties to use as column names in desired order."
     )]
     [array]$Columns,
     [Parameter(
