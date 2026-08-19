@@ -1,6 +1,8 @@
 # Write-PsMdTable
 A tool for converting a PowerShell object into a markdown table.
 
+No AI code generation was used in this script.
+
 ## Example 1 from Context Help
 
 ```pwsh
