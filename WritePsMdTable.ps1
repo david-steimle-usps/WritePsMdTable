@@ -39,7 +39,7 @@ function Write-PsMdTable {
   The properties to use as column names in desired order.
 
   .PARAMETER Justification
-  Array of L/C/R entries for Left/Center/Right justification of columns.
+  Array of L/C/R (case insensitive) entries for Left/Center/Right justification of columns. Any non-L/C/R or null entry will result in a centered column.
 
   .INPUTS
   PSObject
