@@ -1,6 +1,46 @@
 # Write-PsMdTable
 A tool for converting a PowerShell object into a markdown table.
 
+## Example 1 from Context Help
+
+```pwsh
+$MyObject = @(
+  [pscustomobject]@{
+    Year = 4
+    Name = 'J. Doe'
+  },
+  [pscustomobject]@{
+    Year = 1
+    Name = 'A. Newb'
+  },[pscustomobject]@{
+    Year = 2
+    Name = 'C. Yalater'
+  }
+)
+
+Write-PsMdTable -InputObject $MyObject -Columns @('Name','Year') -Justification @('L','C')
+```
+```
+| Name | Year |
+| :--- | :--: |
+| J. Doe | 4 |
+| A. Newb | 1 |
+| C. Yalater | 2 |
+```
+
+## Example 2 from Context Help
+
+```pwsh
+$Splat = @{
+  InputObject = ( Get-Content .\data.json | ConvertFrom-Json ) | `
+  Sort-Object -Property Year,Month,Day
+  Columns = @('Release','Type','Artist','Album')
+  Justification = @('C','C','R','L')
+}
+
+Write-PsMdTable @Splat
+```
+
 ## Example Using Test Data
 Create a basic table with the test data provided in `data.json`.
 
