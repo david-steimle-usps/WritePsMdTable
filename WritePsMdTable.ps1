@@ -1,7 +1,7 @@
 function Write-PsMdTable {
   <#
   .SYNOPSIS
-
+  A tool for converting a PowerShell object into a markdown table.
   .DESCRIPTION
 
   .EXAMPLE
@@ -23,6 +23,12 @@ function Write-PsMdTable {
 
   .PARAMETER Justification
   Array of L/C/R entries for Left/Center/Right justification of columns.
+
+  .INPUTS
+  PSObject
+
+  .OUTPUTS
+  String
 
   .LINK
 
