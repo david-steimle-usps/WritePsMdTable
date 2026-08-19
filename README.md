@@ -1,8 +1,8 @@
 # Write-PsMdTable
+A tool for converting a PowerShell object into a markdown table.
 
-
-## Example
-Create a basic table with the test data provided.
+## Example Using Test Data
+Create a basic table with the test data provided in `data.json`.
 
 Injest the `data.json` file.
 
@@ -27,7 +27,12 @@ Madonna 1989-03-20 Like a Prayer Studio 1989 03    20
 Filter your data as desired:
 ```pwsh
 # get all 1990s releases
-$MyData = $MyObject | Where-Object -FilterScript { $PSItem.Year -ge 1990 -and $PSItem.Year -le 1999 } | Sort-Object -Property Year,Month,Day | Select-Object -Property Artist,Album,Release
+$MyData = $MyObject | `
+  Where-Object -FilterScript { 
+    $PSItem.Year -ge 1990 -and $PSItem.Year -le 1999 
+  } | `
+  Sort-Object -Property Year,Month,Day | `
+  Select-Object -Property Artist,Album,Release
 
 $MyData
 
@@ -75,3 +80,4 @@ And your table should look like this in Markdown:
 | 1994-10-24 | Madonna | Bedtime Stories |
 | 1997-10-22 | Kylie | Impossible Princess |
 | 1998-02-22 | Madonna | Ray of Light |
+
