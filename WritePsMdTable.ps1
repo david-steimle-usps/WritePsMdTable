@@ -3,8 +3,24 @@ function Write-PsMdTable {
   .SYNOPSIS
   A tool for converting a PowerShell object into a markdown table.
   .DESCRIPTION
+  Accepts object input, column names, and column justification to create a basic markdown table from the object. Column selection and justification preferences help build the table more accurately.
 
+  Use `Get-Help Write-PsMdTable -Online` for further examples.
   .EXAMPLE
+  $MyObject = @(
+    [pscustomobject]@{
+      Year = 4
+      Name = 'J. Doe'
+    },
+    [pscustomobject]@{
+      Year = 1
+      Name = 'A. Newb'
+    },[pscustomobject]@{
+      Year = 2
+      Name = 'C. Yalater'
+    }
+  )
+
   Write-PsMdTable -InputObject $MyObject -Columns @('Name','Year') -Justification @('L','C')
 
   .EXAMPLE
@@ -13,6 +29,7 @@ function Write-PsMdTable {
     Columns = @('Release','Type','Artist','Album')
     Justification = @('C','C','R','L')
   }
+
   Write-PsMdTable @Splat
 
   .PARAMETER InputObject
@@ -31,7 +48,7 @@ function Write-PsMdTable {
   String
 
   .LINK
-
+  https://github.com/david-steimle-usps/WritePsMdTable
   #>
   [CmdletBinding()]
   param(
