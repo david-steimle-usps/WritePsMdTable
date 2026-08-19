@@ -42,7 +42,7 @@ Write-PsMdTable @Splat
 ```
 
 ## Example Using Test Data
-Create a basic table with the test data provided in `data.json`.
+Create a basic table with the test data provided in `data.json` and filter for desired output.
 
 Injest the `data.json` file.
 
@@ -124,4 +124,3 @@ And your table should look like this in Markdown:
 | 1994-10-24 | Madonna | Bedtime Stories |
 | 1997-10-22 | Kylie | Impossible Princess |
 | 1998-02-22 | Madonna | Ray of Light |
-
