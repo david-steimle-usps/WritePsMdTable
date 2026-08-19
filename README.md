@@ -29,6 +29,21 @@ Write-PsMdTable -InputObject $MyObject -Columns @('Name','Year') -Justification 
 | A. Newb | 1 |
 | C. Yalater | 2 |
 ```
+### Expanded to display inline filter and sort:
+Use `Where-Object` and `Sort-Object` to filter and sort inline.
+```pwsh
+Write-PsMdTable -InputObject (
+  $MyObject | `
+  Where-Object -Property Year -gt 1 | `
+  Sort-Object -Property Year
+) -Columns @('Name','Year') -Justification @('L','C')
+```
+```
+| Name | Year |
+| :--- | :--: |
+| C. Yalater | 2 |
+| J. Doe | 4 |
+```
 
 ## Example 2 from Context Help
 
