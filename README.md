@@ -15,7 +15,8 @@ $MyObject.Count
 32
 
 $MyObject | Select-Object -First 5 | Format-Table
-
+```
+```
 Artist  Release    Album         Type   Year Month Day
 ------  -------    -----         ----   ---- ----- ---
 Madonna 1983-07-27 Madonna       Studio 1983 07    27 
@@ -35,7 +36,8 @@ $MyData = $MyObject | `
   Select-Object -Property Artist,Album,Release
 
 $MyData
-
+```
+```
 Artist  Album               Release
 ------  -----               -------
 Kylie   Rhythm of Love      1990-11-12
@@ -59,6 +61,8 @@ $MyTable = Write-PsMdTable @Splat
 Your table is now assigned to `$MyTable`:
 ```pwsh
 $MyTable
+```
+```
 | Release | Artist | Album |
 | :--: | ---: | :--- |
 | 1990-11-12 | Kylie | Rhythm of Love |
