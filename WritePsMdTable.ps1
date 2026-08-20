@@ -72,47 +72,82 @@ function Write-PsMdTable {
     [array]$Justification
   )
 
-  $Table = New-Object "System.Collections.Generic.List[string]"
+  $ColumnDefinitions = New-Object "System.Collections.Generic.List[psobject]"
 
-  $TableKey = New-Object "System.Collections.Generic.List[psobject]"
-
-  $i = 0
   $Columns.ForEach({
-    $TableKey.Add(
+    $ColumnDefinitions.Add(
       [pscustomobject]@{
-        Column = $PSItem
-        Justification = $(
-          if($Justification){
-            if($Justification[$i]){
-              $Justification[$i]
-            } else {
-              'C'
-            }
+        Name = $PSItem
+        Length = $(
+          if($PSItem.Length -lt 4){
+            Write-Output 4
           } else {
-            'C'
+            Write-Output $PSItem.Length
           }
         )
+        Justification = $Justification[
+          [array]::IndexOf($Columns,$PSItem)
+        ].ToUpper()
       }
     )
-    $i++
   })
 
-  $Table.Add( "| $($TableKey.Column.ForEach({$PSItem+' |'}))" )
-  $Table.Add( "| $($TableKey.Justification.ForEach({
-    if($PSItem -eq 'L'){
-      ':--- |'
-    } elseif($PSItem -eq 'R'){
-      '---: |'
-    } else {
-      ':--: |'
-    }
-  }))" )
+  $TableData = $InputObject | Select-Object -Property $Columns
 
-  foreach($Item in $InputObject){
-    $Row = $Item | Select-Object -Property $Columns
-    $Values = $Row | Select-Object -Property $Columns | ForEach-Object { $PSItem.PSObject.Properties.Value }
-    $Md = "| " + $($Values -join " | ") + " |"
-    $Table.Add($Md)
+  foreach($Row in $TableData){
+    foreach($Name in $Row.PSObject.Properties.Name){
+      $Compare = ($Row.$Name).Length
+      $ColDef = $ColumnDefinitions | Where-Object -Property Name -eq $Name
+      $DefinedLength = $ColDef | Select-Object -ExpandProperty Length
+      Write-Verbose "$Compare | $DefinedLength"
+      if($Compare -gt $DefinedLength){
+        ($ColumnDefinitions | Where-Object -Property Name -eq $Name).Length = $Compare
+      }
+    }
+  }
+
+  $Table = New-Object "System.Collections.Generic.List[string]"
+
+  $ColumnHeader = "| "
+  $Columns.Foreach({
+    $Width = ($ColumnDefinitions | Where-Object -Property Name -eq $PSItem).Length
+    $ColumnHeader += $PSItem.PadRight($Width)
+    $ColumnHeader += " | "
+  })
+  $Table.Add($ColumnHeader)
+
+  $Justifiers = "| "
+  $Columns.Foreach({
+    $Width = ($ColumnDefinitions | Where-Object -Property Name -eq $PSItem).Length
+    $Justification = ($ColumnDefinitions | Where-Object -Property Name -eq $PSItem).Justification
+    $JustificationDef = switch($Justification){
+      'L' {
+        ":" + ('-' * ($Width -1))
+        break
+      }
+      'R' {
+        ('-' * ($Width -1)) + ":"
+        break
+      }
+      default {
+        ":" + ('-' * ($Width -2)) + ":"
+      }
+    }
+    $Justifiers += $JustificationDef
+    $Justifiers += " | "
+  })
+  $Table.Add($Justifiers)
+
+  foreach($Row in $TableData){
+    foreach($Name in $Row.PSObject.Properties.Name){
+      $Width = ($ColumnDefinitions | Where-Object -Property Name -eq $Name).Length
+      $Row.$Name = ([string]($Row.$Name)).PadRight($Width)
+    }
+    $TableRow = "| "
+    foreach($Name in $Row.PSObject.Properties.Name){
+      $TableRow += $Row.$Name + " | "
+    }
+    $Table.Add($TableRow)
   }
 
   $Table
