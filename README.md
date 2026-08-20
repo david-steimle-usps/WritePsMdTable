@@ -23,11 +23,11 @@ $MyObject = @(
 Write-PsMdTable -InputObject $MyObject -Columns @('Name','Year') -Justification @('L','C')
 ```
 ```
-| Name | Year |
-| :--- | :--: |
-| J. Doe | 4 |
-| A. Newb | 1 |
-| C. Yalater | 2 |
+| Name       | Year |
+| :--------- | :--: |
+| J. Doe     | 4    |
+| A. Newb    | 1    |
+| C. Yalater | 2    |
 ```
 ### Expanded to display inline filter and sort:
 Use `Where-Object` and `Sort-Object` to filter and sort inline.
@@ -39,10 +39,10 @@ Write-PsMdTable -InputObject (
 ) -Columns @('Name','Year') -Justification @('L','C')
 ```
 ```
-| Name | Year |
-| :--- | :--: |
-| C. Yalater | 2 |
-| J. Doe | 4 |
+| Name       | Year |
+| :--------- | :--: |
+| C. Yalater | 2    |
+| J. Doe     | 4    |
 ```
 
 ## Example 2 from Context Help
@@ -120,24 +120,25 @@ Your table is now assigned to `$MyTable`:
 $MyTable
 ```
 ```
-| Release | Artist | Album |
-| :--: | ---: | :--- |
-| 1990-11-12 | Kylie | Rhythm of Love |
-| 1991-10-14 | Kylie | Let's Get to It |
-| 1992-10-19 | Madonna | Erotica |
-| 1994-09-19 | Kylie | Kylie Minogue |
-| 1994-10-24 | Madonna | Bedtime Stories |
-| 1997-10-22 | Kylie | Impossible Princess |
-| 1998-02-22 | Madonna | Ray of Light |
+| Release    | Artist  | Album               |
+| :--------: | ------: | :------------------ |
+| 1990-11-12 | Kylie   | Rhythm of Love      |
+| 1991-10-14 | Kylie   | Let's Get to It     |
+| 1992-10-19 | Madonna | Erotica             |
+| 1994-09-19 | Kylie   | Kylie Minogue       |
+| 1994-10-24 | Madonna | Bedtime Stories     |
+| 1997-10-22 | Kylie   | Impossible Princess |
+| 1998-02-22 | Madonna | Ray of Light        |
 ```
 And your table should look like this in Markdown:
 
-| Release | Artist | Album |
-| :--: | ---: | :--- |
-| 1990-11-12 | Kylie | Rhythm of Love |
-| 1991-10-14 | Kylie | Let's Get to It |
-| 1992-10-19 | Madonna | Erotica |
-| 1994-09-19 | Kylie | Kylie Minogue |
-| 1994-10-24 | Madonna | Bedtime Stories |
-| 1997-10-22 | Kylie | Impossible Princess |
-| 1998-02-22 | Madonna | Ray of Light |
+| Release    | Artist  | Album               |
+| :--------: | ------: | :------------------ |
+| 1990-11-12 | Kylie   | Rhythm of Love      |
+| 1991-10-14 | Kylie   | Let's Get to It     |
+| 1992-10-19 | Madonna | Erotica             |
+| 1994-09-19 | Kylie   | Kylie Minogue       |
+| 1994-10-24 | Madonna | Bedtime Stories     |
+| 1997-10-22 | Kylie   | Impossible Princess |
+| 1998-02-22 | Madonna | Ray of Light        |
+
